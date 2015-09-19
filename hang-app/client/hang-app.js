@@ -14,6 +14,9 @@ if (Meteor.isClient) {
       Session.set('counter', Session.get('counter') + 1);
     }
   });
+
+  Template.landingPage.helpers({
+  });
 }
 
 if (Meteor.isServer) {
