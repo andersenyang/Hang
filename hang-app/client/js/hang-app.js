@@ -18,7 +18,7 @@ if (Meteor.isClient) {
         'click #facebook-login': function(event) {
             Meteor.loginWithFacebook({}, function(err) {
                 if (err) {
-                    // Router.go('/landingPage');
+                    Router.go('/landingPage');
                     throw new Meteor.Error("Facebook login failed");
                 }else{
                   Router.go('/landingPage');

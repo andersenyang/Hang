@@ -1,1 +1,13 @@
 /* CSS declarations go here */
+@font-face {
+	font-family: appFont;
+    src: url(font/Lato-Light.ttf);
+}
+
+* {
+	font-family: appFont;
+}
+
+h1 {
+	font-family: appFont;
+}
