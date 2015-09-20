@@ -2,19 +2,6 @@ if (Meteor.isClient) {
     // counter starts at 0
     Session.setDefault('counter', 0);
 
-    Template.hello.helpers({
-        counter: function() {
-            return Session.get('counter');
-        }
-    });
-
-    Template.hello.events({
-        'click button': function() {
-            // increment the counter when button is clicked
-            Session.set('counter', Session.get('counter') + 1);
-        }
-    });
-
     Template.landingPage.helpers({});
 
     Template.foo.helpers({
@@ -31,7 +18,10 @@ if (Meteor.isClient) {
         'click #facebook-login': function(event) {
             Meteor.loginWithFacebook({}, function(err) {
                 if (err) {
+                    // Router.go('/landingPage');
                     throw new Meteor.Error("Facebook login failed");
+                }else{
+                  Router.go('/landingPage');
                 }
             });
         },
@@ -51,3 +41,16 @@ if (Meteor.isServer) {
         // code to run on server at startup
     });
 }
+
+Router.route('/', function () {
+  if (Meteor.userId()){
+    this.render('landingPage');
+  }else{
+    this.render('login');
+  }
+});
+
+Router.route('/landingPage', function () {
+    this.render('landingPage');
+});
+
