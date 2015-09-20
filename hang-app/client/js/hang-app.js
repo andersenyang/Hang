@@ -1,4 +1,5 @@
 Hangouts = new Mongo.Collection("hangouts");
+var geocoder;
 
 if (Meteor.isClient) {
     Template.landingPage.helpers({
@@ -116,6 +117,7 @@ Router.route('/', function () {
   // if (Meteor.userId() == undefined){
     var self = this;
     navigator.geolocation.getCurrentPosition(function (position){ 
+      geocoder = new google.maps.Geocoder();
       codeLatLng(position.coords.latitude, position.coords.longitude, function (city, country){
         self.render('landingPage', {
           data: {
