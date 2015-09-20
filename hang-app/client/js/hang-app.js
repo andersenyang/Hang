@@ -8,6 +8,25 @@ if (Meteor.isClient) {
     });
 
     Template.landingPage.events({
+      "click .new-hangout-btn": function (event) {
+        // Prevent default browser form submit
+        event.preventDefault();
+   
+        // Get value from form element
+        // var text = event.target.text.value;
+   
+        // // Insert a task into the collection
+        // Hangouts.insert({
+        //   text: text,
+        //   createdAt: new Date() // current time
+        // });
+        Router.go('/newHangout');
+        // Clear form
+        // event.target.text.value = "";
+      }
+    });
+
+    Template.newHangout.events({
       "submit .new-hangout": function (event) {
         // Prevent default browser form submit
         event.preventDefault();
@@ -20,17 +39,12 @@ if (Meteor.isClient) {
           text: text,
           createdAt: new Date() // current time
         });
-   
+        Router.go('/');
         // Clear form
         event.target.text.value = "";
       }
     });
 
-    Hangouts.allow({
-      insert: function (text, createdAt) {
-        return true;
-      }
-    })
 
     Template.foo.helpers({
         templateGestures: {
@@ -58,4 +72,8 @@ Router.route('/', function () {
     } else {
   this.render('login');
     }
+});
+
+Router.route('/newHangout', function () {
+  this.render('newHangout');
 });

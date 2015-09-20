@@ -1,20 +1,57 @@
 /* CSS declarations go here */
-body,html{
+body,html {
 	border: 0;
 	margin: 0;
 }
 * {
 	font-family: 'Lato', sans-serif;
-	background-color: #F0F0F0;
+	background-color: white;
 }
 
-.header-bar{
+.header-bar {
+	position: fixed;
 	width: 100%;
+	top: 0;
 	text-align: center;
 	/*border: 1px solid black;*/
 	font-size: 24pt;
 	background-color: #ffcb6e;
 	padding-top: 10px;
 	padding-bottom: 10px;
+	color: white;
+	z-index: 10;
+}
+
+.new-hangout-btn {
+	position: fixed;
+	top: 0;
+	padding-top: 10px;
+	right: 0;
+	border: none;
+	font-size: 24pt;
+	background-color: #ffcb6e;
+	color: white;
+	z-index: 11;
+}
+
+ul {
+	position: relative;
+	padding: 0;
+	top: 58px;
+	margin-top: 0;
+}
+.hangout-cell {
+	width: 100%;
+	text-align: center;
+	text-decoration: none;
+	list-style-type: none;
+	border: 1px solid #F0F0F0;
+	height: 50px;
+	color: #707070;
+}
+
+.new-hangout {
+	position: relative;
+	top: 58px;
 }
 

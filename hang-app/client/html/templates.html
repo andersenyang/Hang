@@ -1,9 +1,7 @@
 <template name="landingPage">
 	<div class="header-bar">Hangouts</div>
     <div class="landing-page-container">
-    	<form class="new-hangout">
-	    	<input type="text" name="text" placeholder="Type to add new hangouts" />
-	    </form>
+	    <button class="new-hangout-btn">+</button>
     	<ul>
 	      {{#each hangouts}}
 	        {{> hangout}}
@@ -13,6 +11,18 @@
 </template>
 
 <template name="signUp">
+</template>
+
+<template name="newHangout">
+	<div class="header-bar">Create Hangout</div>
+	<form class="new-hangout">
+    	<input type="text" name="text" placeholder="Type to add description" />
+    	<input type="text" name="time" placeholder="Type to add time" />
+    	<input type="text" name="location" placeholder="Type to add location" />
+    	<input type="text" name="cap" placeholder="Type to add max cap on attendees" />
+    	<input type="text" name="minflop" placeholder="Type to add min flop rate" />
+    	<input type="submit" value="Submit">
+    </form>
 </template>
 
 <template name="login">
@@ -48,5 +58,5 @@
 </template>
 
 <template name="hangout">
-	<li>{{text}}</li>
+	<li class="hangout-cell">{{text}}</li>
 </template>
