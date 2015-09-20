@@ -10,20 +10,9 @@ if (Meteor.isClient) {
 
     Template.landingPage.events({
       "click .new-hangout-btn": function (event) {
-        // Prevent default browser form submit
         event.preventDefault();
-   
-        // Get value from form element
-        // var text = event.target.text.value;
-   
-        // // Insert a task into the collection
-        // Hangouts.insert({
-        //   text: text,
-        //   createdAt: new Date() // current time
-        // });
+
         Router.go('/newHangout');
-        // Clear form
-        // event.target.text.value = "";
       }
     });
 
@@ -34,10 +23,18 @@ if (Meteor.isClient) {
    
         // Get value from form element
         var text = event.target.text.value;
+        var time = event.target.time.value;
+        var location = event.target.location.value;
+        var cap = event.target.cap.value;
+        var minflop = event.target.minflop.value;
    
         // Insert a task into the collection
         Hangouts.insert({
           text: text,
+          time: time,
+          location: location,
+          cap: cap,
+          minflop: minflop,
           createdAt: new Date() // current time
         });
         Router.go('/');
@@ -116,16 +113,19 @@ Router.onBeforeAction(function () {
 Router.route('/', function () {
   // if (Meteor.userId() == undefined){
     var self = this;
-    navigator.geolocation.getCurrentPosition(function (position){ 
-      geocoder = new google.maps.Geocoder();
-      codeLatLng(position.coords.latitude, position.coords.longitude, function (city, country){
-        self.render('landingPage', {
-          data: {
-            locationString: city + " " + country
-          }
-        });
+    debugger
+    var loc = Geolocation.latLng();
+    geocoder = new google.maps.Geocoder();
+    codeLatLng(loc.lat, loc.lng, function (city, country){
+      self.render('landingPage', {
+        data: {
+          locationString: city + " " + country
+        }
       });
     });
+    // navigator.geolocation.getCurrentPosition(function (position){ 
+      
+    // });
     
   // } else {
     // this.render('login');
