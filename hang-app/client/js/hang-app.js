@@ -113,8 +113,15 @@ Router.onBeforeAction(function () {
 Router.route('/', function () {
   // if (Meteor.userId() == undefined){
     this.render('landingPage');
-    // var self = this;
-    // var loc = Geolocation.latLng();
+    var self = this;
+    var loc = Geolocation.latLng();
+    httpGetAsync ('http://maps.googleapis.com/maps/api/geocode/json?latlng=' + loc.lat + ',' + loc.lng, function(res){
+      self.render('landingPage', {
+        data: {
+          locationString: JSON.parse(res).results[0].formatted_address
+        }
+      });
+    });
     // geocoder = new google.maps.Geocoder();
     // codeLatLng(loc.lat, loc.lng, function (city, country){
     //   self.render('landingPage', {
@@ -184,3 +191,14 @@ Router.route('/logout', function () {
 	}
     })
 });
+
+function httpGetAsync(theUrl, callback)
+{
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function() { 
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+            callback(xmlHttp.responseText);
+    }
+    xmlHttp.open("GET", theUrl, true); // true for asynchronous 
+    xmlHttp.send(null);
+}
