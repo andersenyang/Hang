@@ -44,6 +44,18 @@ if (Meteor.isClient) {
       }
     });
 
+    Meteor.setInterval(function() {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            Session.set('lat', position.coords.latitude);
+            Session.set('lon', position.coords.longitude);
+        });
+    }, 500);
+
+    Template.landingPage.helpers({
+      lat: function() { return Session.get('lat'); },
+      lon: function() { return Session.get('lon'); }
+    });
+
 
     Template.foo.helpers({
         templateGestures: {
@@ -114,23 +126,25 @@ Router.onBeforeAction(function () {
 Router.route('/', function () {
   // if (Meteor.userId() == undefined){
     this.render('landingPage');
-    var self = this;
-    window.setInterval(function(){
-      loc = Geolocation.latLng();
-      // var str = httpGet ('http://maps.googleapis.com/maps/api/geocode/json?latlng=' + loc.lat + ',' + loc.lng);
+    // var self = this;
+    // window.setInterval(function(){
+    //   loc = Geolocation.latLng();
+    //   // var str = httpGet ('http://maps.googleapis.com/maps/api/geocode/json?latlng=' + loc.lat + ',' + loc.lng);
 
-      if (!loc){
-        return;
-      }
+    //   if (!loc){
+    //     return;
+    //   }
 
-      httpGetAsync ('http://maps.googleapis.com/maps/api/geocode/json?latlng=' + loc.lat + ',' + loc.lng, function(res){
-        self.render('landingPage', {
-          data: {
-            locationString: JSON.parse(res).results[0].formatted_address
-          }
-        });
-      });
-    }, 300);
+    //   httpGetAsync ('http://maps.googleapis.com/maps/api/geocode/json?latlng=' + loc.lat + ',' + loc.lng, function(res){
+    //     self.render('landingPage', {
+    //       data: {
+    //         locationString: JSON.parse(res).results[0].formatted_address
+    //       }
+    //     });
+    //   });
+    // }, 300);
+
+    
     
     // geocoder = new google.maps.Geocoder();
     // codeLatLng(loc.lat, loc.lng, function (city, country){
