@@ -11,3 +11,4 @@ accounts-facebook
 service-configuration
 accounts-ui
 chriswessels:hammer
+iron:router
