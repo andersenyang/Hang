@@ -1,5 +1,6 @@
 Hangouts = new Mongo.Collection("hangouts");
 var geocoder;
+var loc;
 
 if (Meteor.isClient) {
     Template.landingPage.helpers({
@@ -115,7 +116,13 @@ Router.route('/', function () {
     this.render('landingPage');
     var self = this;
     window.setInterval(function(){
-      var loc = Geolocation.latLng();
+      loc = Geolocation.latLng();
+      // var str = httpGet ('http://maps.googleapis.com/maps/api/geocode/json?latlng=' + loc.lat + ',' + loc.lng);
+
+      if (!loc){
+        return;
+      }
+
       httpGetAsync ('http://maps.googleapis.com/maps/api/geocode/json?latlng=' + loc.lat + ',' + loc.lng, function(res){
         self.render('landingPage', {
           data: {
@@ -194,6 +201,14 @@ Router.route('/logout', function () {
 	}
     })
 });
+
+function httpGet(theUrl)
+{
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
+    xmlHttp.send( null );
+    return xmlHttp.responseText;
+}
 
 function httpGetAsync(theUrl, callback)
 {
