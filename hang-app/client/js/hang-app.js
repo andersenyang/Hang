@@ -114,14 +114,17 @@ Router.route('/', function () {
   // if (Meteor.userId() == undefined){
     this.render('landingPage');
     var self = this;
-    var loc = Geolocation.latLng();
-    httpGetAsync ('http://maps.googleapis.com/maps/api/geocode/json?latlng=' + loc.lat + ',' + loc.lng, function(res){
-      self.render('landingPage', {
-        data: {
-          locationString: JSON.parse(res).results[0].formatted_address
-        }
+    window.setInterval(function(){
+      var loc = Geolocation.latLng();
+      httpGetAsync ('http://maps.googleapis.com/maps/api/geocode/json?latlng=' + loc.lat + ',' + loc.lng, function(res){
+        self.render('landingPage', {
+          data: {
+            locationString: JSON.parse(res).results[0].formatted_address
+          }
+        });
       });
-    });
+    }, 300);
+    
     // geocoder = new google.maps.Geocoder();
     // codeLatLng(loc.lat, loc.lng, function (city, country){
     //   self.render('landingPage', {
