@@ -57,6 +57,34 @@ if (Meteor.isClient) {
     });
 
     Template.login.events({
+	"submit form": function (event, template) {
+	    var username = event.target.username.value;
+	    var password = event.target.password.value;
+	    Meteor.loginWithPassword(username, password, function () {
+		this.render('landingPage');
+	    });
+	}
+    });
+
+    Template.signUp.events({
+	"submit form": function (event, template) {
+	    var username = event.target.username.value;
+	    var password = event.target.password.value;
+	    var password2 = event.target.password.value;
+
+	    if (password == password2) {
+		Accounts.createUser({
+		    username: username,
+		    password: password
+		}, function (error) {
+		    if (error) {
+			console.log("Error creating user");
+		    }
+		});
+	    } else {
+		console.log("Password do not match");
+	    }
+	}
     });
 }
 
@@ -68,12 +96,19 @@ if (Meteor.isServer) {
 
 Router.route('/', function () {
     if (Meteor.userId() == undefined){
-  this.render('landingPage');
+	this.render('login');
     } else {
-  this.render('login');
+	this.render('landingPage');
     }
 });
 
 Router.route('/newHangout', function () {
   this.render('newHangout');
+
+Router.route('/signUp', function () {
+    this.render('signUp');
+});
+
+Router.route('/login', function () {
+    this.render('login');
 });

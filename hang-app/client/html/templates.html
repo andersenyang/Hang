@@ -20,6 +20,13 @@
 </template>
 
 <template name="signUp">
+    <form>
+	<input type="text" name="username" />
+	<input type="text" name="password" />
+	<input type="text" name="password2" />
+	<input type="submit" value="Sign Up" />
+    </form>
+    <a href="/login">Login</a>
 </template>
 
 <template name="newHangout">
@@ -35,19 +42,12 @@
 </template>
 
 <template name="login">
-	<div>Let's Hang</div>
-	<div class="description">(description ...)</div>
-
-	<div class="controls">
-	    <button>Hang in Boston</button>
-	</div>
-    {{#if currentUser}}
-        {{currentUser.services.facebook.name}} -
-        {{currentUser.services.facebook.gender}}
-        <button id="logout">Logout</button>
-    {{else}}
-        <button id="facebook-login" class="btn btn-default"> Login with Facebook</button>
-    {{/if}}
+    <form>
+	<input type="text" name="username" />
+	<input type="text" name="password" />
+	<input type="submit" value="Login" />
+    </form>
+    <a href="/signUp">Sign Up</a>
 </template>
 
 <template name="loadingPage">
