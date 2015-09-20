@@ -57,6 +57,43 @@ if (Meteor.isClient) {
     });
 
     Template.login.events({
+	"submit #login-form": function (event, template) {
+	    event.preventDefault();
+	    var username = event.target.username.value;
+	    var password = event.target.password.value;
+	    Meteor.loginWithPassword(username, password, function (error) {
+		if (error) {
+		    console.log("Login Error");
+		} else {
+		    console.log("sucess")
+		    Router.go('/');
+		}
+	    });
+	}
+    });
+
+    Template.signUp.events({
+	"submit #sign-up-form": function (event, template) {
+	    event.preventDefault();
+	    var username = event.target.username.value;
+	    var password = event.target.password.value;
+	    var password2 = event.target.password.value;
+
+	    if (password == password2) {
+		Accounts.createUser({
+		    username: username,
+		    password: password
+		}, function (error) {
+		    if (error) {
+			console.log("Error creating user");
+		    } else {
+			Router.go('/');
+		    }
+		});
+	    } else {
+		console.log("Passwords do not match");
+	    }
+	}
     });
 }
 
@@ -66,8 +103,17 @@ if (Meteor.isServer) {
     });
 }
 
+Router.onBeforeAction(function () {
+    if (!Meteor.userId()) {
+  this.render('login');
+    } else {
+  this.next();
+    }
+}, { except: ['signUp']
+});
+
 Router.route('/', function () {
-  if (Meteor.userId() == undefined){
+  // if (Meteor.userId() == undefined){
     var self = this;
     navigator.geolocation.getCurrentPosition(function (position){ 
       codeLatLng(position.coords.latitude, position.coords.longitude, function (city, country){
@@ -79,9 +125,9 @@ Router.route('/', function () {
       });
     });
     
-  } else {
-    this.render('login');
-  }
+  // } else {
+    // this.render('login');
+  // }
 });
 
 Router.route('/newHangout', function () {
@@ -118,3 +164,21 @@ function codeLatLng(lat, lng, callback) {
     }
   });
 }
+
+Router.route('/signUp', function () {
+    this.render('signUp');
+});
+
+Router.route('/login', function () {
+    this.render('login');
+});
+
+Router.route('/logout', function () {
+    Meteor.logout(function (error) {
+	if (error) {
+	    console.log("Error logging out");
+	} else {
+	    Router.go('/');
+	}
+    })
+});

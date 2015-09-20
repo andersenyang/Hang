@@ -5,7 +5,12 @@ body,html {
 }
 * {
 	font-family: 'Lato', sans-serif;
-	/*background-color: white;*/
+	background-color: white;
+}
+
+.hangout-bg {
+    background-image: url("/hangout.jpg");
+    background-size: 340px 560px;
 }
 
 .header-bar {
@@ -74,6 +79,7 @@ ul {
 	position: relative;
 	height: 57px;
 	width: 57px;
+	background-color: #eee;
 }
 
 .landing-page-container {
@@ -86,3 +92,21 @@ ul {
 	top: 57px;
 }
 
+.login-page, .sign-up-page {
+    margin-top: 60px;
+    text-align: center;
+}
+
+.login-page a, .sign-up-page a {
+    margin-top: 40px;
+    font-size: 12px;
+    display: block;
+}
+
+.login-page .controls, .sign-up-page .controls {
+    margin-top: 30px;
+}
+
+.login-form, .sign-up-form {
+    margin-top: 65px;
+}
