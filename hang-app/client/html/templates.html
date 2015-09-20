@@ -4,7 +4,7 @@
 	    <button class="new-hangout-btn">+</button>
     	<ul>
 
-	    <li class="hangout-cell">lat:{{lat}},lon:{{lon}},Location: {{this.locationString}}</li>
+	    <li class="hangout-cell">lat:{{lat}},lon:{{lon}},Location: {{locationString}}</li>
 	      {{#each hangouts}}
 	        {{> hangout}}
 	      {{/each}}
@@ -75,5 +75,75 @@
 </template>
 
 <template name="hangout">
-	<li class="hangout-cell">Description: {{text}} | time: {{time}} | location: {{location}} | cap: {{cap}} | minflop: {{minflop}}</li>
+	<li class="hangout-cell"><div class="remove"><p>&#10006;</p></div>Description: {{text}} | time: {{time}} | location: {{location}} | cap: {{cap}} | minflop: {{minflop}}<div class="interrested"><p>&#10004;</p></div></li>
+</template>
+
+<template name="myhangoutsPage">
+	<div class="header-bar">Hangouts <a href="/logout">Logout</a></div>
+
+	<li class="hangout-cell">lat:{{lat}},lon:{{lon}},Location: {{locationString}}</li>
+      {{#each hangouts}}
+        {{> hangout}}
+      {{/each}}
+    </ul>
+    
+	 <div class="footer-buffer"></div>
+    <div class="footer-bar">
+    	<div class="bottom-nav-icon-container" id="landing-icon">
+    		<img class="bottom-nav-icon" src='/homeyellow.png' />
+    	</div>
+    	<div class="bottom-nav-icon-container" id="myhangouts-icon"><img class="bottom-nav-icon" src="/hang_logo_grey.png"></div>
+    	<div class="bottom-nav-icon-container" id="hangouts-icon"><img class="bottom-nav-icon" src="/Calendar-Time_grey.png"></div>
+    	<div class="bottom-nav-icon-container" id="settings-icon"><img class="bottom-nav-icon" src="/settings_grey.png"></div>
+    </div>
+</template>
+
+<template name="hangoutsPage">
+	<div class="header-bar">Hangouts <a href="/logout">Logout</a></div>
+
+	<ul>
+
+    <li class="hangout-cell">lat:{{lat}},lon:{{lon}},Location: {{locationString}}</li>
+      {{#each hangouts}}
+        {{> hangout}}
+      {{/each}}
+    </ul>
+
+
+	 <div class="footer-buffer"></div>
+	<div class="footer-bar">
+	<div class="bottom-nav-icon-container" id="landing-icon">
+		<img class="bottom-nav-icon" src='/homeyellow.png' />
+	</div>
+	<div class="bottom-nav-icon-container" id="myhangouts-icon"><img class="bottom-nav-icon" src="/hang_logo_grey.png"></div>
+	<div class="bottom-nav-icon-container" id="hangouts-icon"><img class="bottom-nav-icon" src="/Calendar-Time_grey.png"></div>
+	<div class="bottom-nav-icon-container" id="settings-icon"><img class="bottom-nav-icon" src="/settings_grey.png"></div>
+    </div>
+</template>
+
+<template name="settingsPage">
+	<div class="header-bar">Hangouts <a href="/logout">Logout</a></div>
+	 <div class="footer-buffer"></div>
+    <div class="footer-bar">
+	<div class="bottom-nav-icon-container" id="landing-icon">
+		<img class="bottom-nav-icon" src='/homeyellow.png' />
+	</div>
+	<div class="bottom-nav-icon-container" id="myhangouts-icon"><img class="bottom-nav-icon" src="/hang_logo_grey.png"></div>
+	<div class="bottom-nav-icon-container" id="hangouts-icon"><img class="bottom-nav-icon" src="/Calendar-Time_grey.png"></div>
+	<div class="bottom-nav-icon-container" id="settings-icon"><img class="bottom-nav-icon" src="/settings_grey.png"></div>
+	</div>
+</template>
+
+<template name="myhangouts">
+	<div class="header-bar">Hangouts <a href="/logout">Logout</a></div>
+	 <div class="footer-buffer"></div>
+	<div class="footer-bar">
+		<div class="bottom-nav-icon-container" id="landing-icon">
+			<img class="bottom-nav-icon" src='/homeyellow.png' />
+		</div>
+		<div class="bottom-nav-icon-container" id="myhangouts-icon"><img class="bottom-nav-icon" src="/hang_logo_grey.png"></div>
+		<div class="bottom-nav-icon-container" id="hangouts-icon"><img class="bottom-nav-icon" src="/Calendar-Time_grey.png"></div>
+		<div class="bottom-nav-icon-container" id="settings-icon"><img class="bottom-nav-icon" src="/settings_grey.png"></div>
+	</div>
+	
 </template>

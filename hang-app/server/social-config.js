@@ -9,3 +9,4 @@ ServiceConfiguration.configurations.insert({
 });
 
 Hangouts = new Mongo.Collection("hangouts");
+Hangers = new Mongo.Collection("hangers");

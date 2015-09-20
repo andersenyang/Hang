@@ -109,3 +109,17 @@ ul {
 .login-form, .sign-up-form {
     margin-top: 65px;
 }
+
+.remove {
+	color: black;
+	display: inline-block;
+	float: left;
+	padding-left: 10px;
+}
+
+.interrested {
+	color: black;
+	display: inline-block;
+	float: right;
+	padding-right: 10px;
+}

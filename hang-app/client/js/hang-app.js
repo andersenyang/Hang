@@ -1,6 +1,5 @@
 Hangouts = new Mongo.Collection("hangouts");
-var geocoder;
-var loc;
+Hangers = new Mongo.Collection("hangers");
 
 if (Meteor.isClient) {
     Template.landingPage.helpers({
@@ -14,6 +13,113 @@ if (Meteor.isClient) {
         event.preventDefault();
 
         Router.go('/newHangout');
+      },
+      "click #landing-icon": function (event) {
+        event.preventDefault();
+
+        Router.go('/landingPage');
+      },
+      "click #myhangouts-icon": function (event) {
+        event.preventDefault();
+
+        Router.go('/myhangoutsPage');
+      },
+      "click #hangouts-icon": function (event) {
+        event.preventDefault();
+
+        Router.go('/hangoutsPage');
+      },
+      "click #settings-icon": function (event) {
+        event.preventDefault();
+
+        Router.go('/settingsPage');
+      },
+      "click .interrested": function (event){
+        Meteor.userId
+      }
+    });
+
+    Template.myhangoutsPage.events({
+      "click .new-hangout-btn": function (event) {
+        event.preventDefault();
+
+        Router.go('/newHangout');
+      },
+      "click #landing-icon": function (event) {
+        event.preventDefault();
+
+        Router.go('/landingPage');
+      },
+      "click #myhangouts-icon": function (event) {
+        event.preventDefault();
+
+        Router.go('/myhangoutsPage');
+      },
+      "click #hangouts-icon": function (event) {
+        event.preventDefault();
+
+        Router.go('/hangoutsPage');
+      },
+      "click #settings-icon": function (event) {
+        event.preventDefault();
+
+        Router.go('/settingsPage');
+      }
+    });
+
+    Template.hangoutsPage.events({
+      "click .new-hangout-btn": function (event) {
+        event.preventDefault();
+
+        Router.go('/newHangout');
+      },
+      "click #landing-icon": function (event) {
+        event.preventDefault();
+
+        Router.go('/landingPage');
+      },
+      "click #myhangouts-icon": function (event) {
+        event.preventDefault();
+
+        Router.go('/myhangoutsPage');
+      },
+      "click #hangouts-icon": function (event) {
+        event.preventDefault();
+
+        Router.go('/hangoutsPage');
+      },
+      "click #settings-icon": function (event) {
+        event.preventDefault();
+
+        Router.go('/settingsPage');
+      }
+    });
+
+    Template.settingsPage.events({
+      "click .new-hangout-btn": function (event) {
+        event.preventDefault();
+
+        Router.go('/newHangout');
+      },
+      "click #landing-icon": function (event) {
+        event.preventDefault();
+
+        Router.go('/landingPage');
+      },
+      "click #myhangouts-icon": function (event) {
+        event.preventDefault();
+
+        Router.go('/myhangoutsPage');
+      },
+      "click #hangouts-icon": function (event) {
+        event.preventDefault();
+
+        Router.go('/hangoutsPage');
+      },
+      "click #settings-icon": function (event) {
+        event.preventDefault();
+
+        Router.go('/settingsPage');
       }
     });
 
@@ -51,6 +157,10 @@ if (Meteor.isClient) {
       if (!loc){
         return;
       }
+
+      httpGetAsync ('http://maps.googleapis.com/maps/api/geocode/json?latlng=' + loc.lat + ',' + loc.lng, function(res){
+        Session.set('locationString', JSON.parse(res).results[0].formatted_address);
+      });
         Session.set('lat', Geolocation.latLng().lat);
         Session.set('lon', Geolocation.latLng().lng);
         
@@ -58,7 +168,12 @@ if (Meteor.isClient) {
 
     Template.landingPage.helpers({
       lat: function() { return Session.get('lat'); },
-      lon: function() { return Session.get('lon'); }
+      lon: function() { return Session.get('lon'); },
+      locationString: function () { return Session.get('locationString')}
+    });
+
+    Template.hangoutsPage.helpers({
+      hangouts: function () { return (Hangers.find({this.Meteor.userId()})).interrestedHangouts};  
     });
 
 
@@ -81,7 +196,16 @@ if (Meteor.isClient) {
 		if (error) {
 		    console.log("Login Error");
 		} else {
-		    console.log("sucess")
+		    console.log("sucess");
+        Hangers.insert({
+          id: Meteor.userId(),
+          time: Date.now(),
+          location: 0,
+          floprate : 0,
+          createdAt: new Date(), // current time
+          myHangouts : [],
+          interrestedHangouts : []
+        });
 		    Router.go('/');
 		}
 	    });
@@ -129,79 +253,12 @@ Router.onBeforeAction(function () {
 });
 
 Router.route('/', function () {
-  // if (Meteor.userId() == undefined){
     this.render('landingPage');
-    // var self = this;
-    // window.setInterval(function(){
-    //   loc = Geolocation.latLng();
-    //   // var str = httpGet ('http://maps.googleapis.com/maps/api/geocode/json?latlng=' + loc.lat + ',' + loc.lng);
-
-    //   if (!loc){
-    //     return;
-    //   }
-
-    //   httpGetAsync ('http://maps.googleapis.com/maps/api/geocode/json?latlng=' + loc.lat + ',' + loc.lng, function(res){
-    //     self.render('landingPage', {
-    //       data: {
-    //         locationString: JSON.parse(res).results[0].formatted_address
-    //       }
-    //     });
-    //   });
-    // }, 300);
-
-    
-    
-    // geocoder = new google.maps.Geocoder();
-    // codeLatLng(loc.lat, loc.lng, function (city, country){
-    //   self.render('landingPage', {
-    //     data: {
-    //       locationString: city + " " + country
-    //     }
-    //   });
-    // });
-    // navigator.geolocation.getCurrentPosition(function (position){ 
-      
-    // });
-    
-  // } else {
-    // this.render('login');
-  // }
 });
 
 Router.route('/newHangout', function () {
   this.render('newHangout');
 });
-
-// function codeLatLng(lat, lng, callback) {
-
-//   var latlng = new google.maps.LatLng(lat, lng);
-//   geocoder.geocode({'latLng': latlng}, function(results, status) {
-//     if (status == google.maps.GeocoderStatus.OK) {
-//       console.log(results)
-//       if (results[1]) {
-//        //formatted address
-//        // alert(results[0].formatted_address)
-//       //find country name
-//         for (var i=0; i<results[0].address_components.length; i++) {
-//           for (var b=0;b<results[0].address_components[i].types.length;b++) {
-//           //there are different types that might hold a city admin_area_lvl_1 usually does in come cases looking for sublocality type will be more appropriate
-//               if (results[0].address_components[i].types[b] == "administrative_area_level_1") {
-//                   //this is the object you are looking for
-//                   city= results[0].address_components[i];
-//                   break;
-//               }
-//           }
-//       }
-
-//       callback(city.short_name, city.long_name);
-//       } else {
-//         alert("No results found");
-//       }
-//     } else {
-//       alert("Geocoder failed due to: " + status);
-//     }
-//   });
-// }
 
 Router.route('/signUp', function () {
     this.render('signUp');
@@ -209,6 +266,22 @@ Router.route('/signUp', function () {
 
 Router.route('/login', function () {
     this.render('login');
+});
+
+Router.route('/myhangoutsPage', function () {
+    this.render('myhangoutsPage');
+});
+
+Router.route('/settingsPage', function () {
+    this.render('settingsPage');
+});
+
+Router.route('/hangoutsPage', function () {
+    this.render('hangoutsPage');
+});
+
+Router.route('/landingPage', function () {
+    this.render('landingPage');
 });
 
 Router.route('/logout', function () {
@@ -239,3 +312,4 @@ function httpGetAsync(theUrl, callback)
     xmlHttp.open("GET", theUrl, true); // true for asynchronous 
     xmlHttp.send(null);
 }
+
