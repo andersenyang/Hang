@@ -8,6 +8,11 @@ body,html {
 	/*background-color: white;*/
 }
 
+body {
+    background-image: url("/hangout.jpg");
+    background-size: 340px 560px;
+}
+
 .header-bar {
 	position: fixed;
 	width: 100%;
