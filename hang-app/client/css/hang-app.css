@@ -86,3 +86,21 @@ ul {
 	top: 57px;
 }
 
+.login-page, .sign-up-page {
+    margin-top: 60px;
+    text-align: center;
+}
+
+.login-page a, .sign-up-page a {
+    margin-top: 40px;
+    font-size: 12px;
+    display: block;
+}
+
+.login-page .controls, .sign-up-page .controls {
+    margin-top: 30px;
+}
+
+.login-form, .sign-up-form {
+    margin-top: 65px;
+}

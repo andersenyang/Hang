@@ -86,12 +86,13 @@ if (Meteor.isClient) {
 		}, function (error) {
 		    if (error) {
 			console.log("Error creating user");
+		    } else {
+			Router.go('/');
 		    }
 		});
 	    } else {
 		console.log("Passwords do not match");
 	    }
-	    return false;
 	}
     });
 }
@@ -117,6 +118,7 @@ Router.route('/', function () {
 
 Router.route('/newHangout', function () {
   this.render('newHangout');
+});
 
 Router.route('/signUp', function () {
     this.render('signUp');
@@ -135,4 +137,3 @@ Router.route('/logout', function () {
 	}
     })
 });
-
