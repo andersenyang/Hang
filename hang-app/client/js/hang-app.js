@@ -57,17 +57,24 @@ if (Meteor.isClient) {
     });
 
     Template.login.events({
-	"submit form": function (event, template) {
+	"submit #login-form": function (event, template) {
+	    event.preventDefault();
 	    var username = event.target.username.value;
 	    var password = event.target.password.value;
-	    Meteor.loginWithPassword(username, password, function () {
-		this.render('landingPage');
+	    Meteor.loginWithPassword(username, password, function (error) {
+		if (error) {
+		    console.log("Login Error");
+		} else {
+		    console.log("sucess")
+		    Router.go('/');
+		}
 	    });
 	}
     });
 
     Template.signUp.events({
-	"submit form": function (event, template) {
+	"submit #sign-up-form": function (event, template) {
+	    event.preventDefault();
 	    var username = event.target.username.value;
 	    var password = event.target.password.value;
 	    var password2 = event.target.password.value;
@@ -82,8 +89,9 @@ if (Meteor.isClient) {
 		    }
 		});
 	    } else {
-		console.log("Password do not match");
+		console.log("Passwords do not match");
 	    }
+	    return false;
 	}
     });
 }
@@ -94,12 +102,17 @@ if (Meteor.isServer) {
     });
 }
 
-Router.route('/', function () {
-    if (Meteor.userId() == undefined){
+Router.onBeforeAction(function () {
+    if (!Meteor.userId()) {
 	this.render('login');
     } else {
-	this.render('landingPage');
+	this.next();
     }
+}, { except: ['signUp']
+});
+
+Router.route('/', function () {
+    this.render('landingPage');
 });
 
 Router.route('/newHangout', function () {
@@ -112,3 +125,14 @@ Router.route('/signUp', function () {
 Router.route('/login', function () {
     this.render('login');
 });
+
+Router.route('/logout', function () {
+    Meteor.logout(function (error) {
+	if (error) {
+	    console.log("Error logging out");
+	} else {
+	    Router.go('/');
+	}
+    })
+});
+

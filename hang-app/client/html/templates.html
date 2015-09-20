@@ -1,5 +1,5 @@
 <template name="landingPage">
-	<div class="header-bar">Hangouts</div>
+    <div class="header-bar">Hangouts <a href="/logout">Logout</a></div>
     <div class="landing-page-container">
 	    <button class="new-hangout-btn">+</button>
     	<ul>
@@ -20,7 +20,7 @@
 </template>
 
 <template name="signUp">
-    <form>
+    <form id="sign-up-form">
 	<input type="text" name="username" />
 	<input type="text" name="password" />
 	<input type="text" name="password2" />
@@ -42,7 +42,7 @@
 </template>
 
 <template name="login">
-    <form>
+    <form id="login-form">
 	<input type="text" name="username" />
 	<input type="text" name="password" />
 	<input type="submit" value="Login" />
