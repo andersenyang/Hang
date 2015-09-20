@@ -79,3 +79,10 @@ ul {
 .landing-page-container {
 	color: white;
 }
+
+.footer-buffer {
+	position: relative;
+	height: 57px;
+	top: 57px;
+}
+
