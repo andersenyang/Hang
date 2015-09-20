@@ -45,10 +45,15 @@ if (Meteor.isClient) {
     });
 
     Meteor.setInterval(function() {
-        navigator.geolocation.getCurrentPosition(function(position) {
-            Session.set('lat', position.coords.latitude);
-            Session.set('lon', position.coords.longitude);
-        });
+      loc = Geolocation.latLng();
+    //   // var str = httpGet ('http://maps.googleapis.com/maps/api/geocode/json?latlng=' + loc.lat + ',' + loc.lng);
+
+      if (!loc){
+        return;
+      }
+        Session.set('lat', Geolocation.latLng().lat);
+        Session.set('lon', Geolocation.latLng().lng);
+        
     }, 500);
 
     Template.landingPage.helpers({
